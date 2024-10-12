@@ -19,6 +19,7 @@ public class ExpRegViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicialização do controlador com a ER básica
+        //teste branch
 
     }
 
