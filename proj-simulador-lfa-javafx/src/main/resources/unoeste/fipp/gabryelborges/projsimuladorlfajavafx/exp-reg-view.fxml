@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unoeste.fipp.gabryelborges.projsimuladorlfajavafx.ExpRegViewController">
+   <children>
+      <VBox alignment="CENTER" minHeight="300.0" minWidth="600.0">
+         <children>
+            <HBox prefHeight="20.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#bttPipelineClick" text="|" />
+                  <Button mnemonicParsing="false" onAction="#bttVazioClick" text="ε" />
+               </children>
+            </HBox>
+             <Label alignment="CENTER" text="Expressão Regular" textAlignment="CENTER" />
+             <TextField fx:id="expRegField" alignment="CENTER" maxWidth="550.0" minWidth="550.0" onKeyReleased="#eventoInputExpReg" prefWidth="550.0">
+               <VBox.margin>
+                  <Insets bottom="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+             <Label alignment="CENTER" text="Entrada" />
+             <TextField fx:id="entradaField" alignment="CENTER" maxWidth="550.0" prefWidth="550.0">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="bttTestarEntrada" mnemonicParsing="false" onAction="#bttTestarEntradaClick" text="Testar entrada" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
