@@ -5,11 +5,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import unoeste.fipp.gabryelborges.projsimuladorlfajavafx.entidades.Util;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static unoeste.fipp.gabryelborges.projsimuladorlfajavafx.entidades.Util.exibirMensagem;
 
 public class ExpRegViewController implements Initializable {
     private static final String ER_PATTERN = "^[0-9a-zA-Z*+|().ε{},]+$";
@@ -19,7 +22,6 @@ public class ExpRegViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicialização do controlador com a ER básica
-        //teste branch
 
     }
 
@@ -33,22 +35,14 @@ public class ExpRegViewController implements Initializable {
         return matcher.matches();
     }
 
-    public void exibirMensagem(String titulo, String headerText, String contentText, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(titulo);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
     public void bttTestarEntradaClick(ActionEvent actionEvent) {
         String er = expRegField.getText();
-        er = er.replace("ε", "");
+        er = er.replace("ε", "").replace(".", "");
         String input = entradaField.getText();
         if (testaExpReg(er, input)) {
-            exibirMensagem("Entrada aceita", null, "Entrada aceita", Alert.AlertType.INFORMATION);
+            Util.exibirMensagem("Entrada aceita", null, "Entrada aceita", Alert.AlertType.INFORMATION);
         } else {
-            exibirMensagem("Entrada não aceita", null, "Entrada não aceita", Alert.AlertType.ERROR);
+            Util.exibirMensagem("Entrada não aceita", null, "Entrada não aceita", Alert.AlertType.ERROR);
         }
     }
 

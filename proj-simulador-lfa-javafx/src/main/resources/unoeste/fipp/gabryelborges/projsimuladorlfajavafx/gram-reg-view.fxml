@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox minWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unoeste.fipp.gabryelborges.projsimuladorlfajavafx.GramRegViewController">
+   <children>
+      <HBox alignment="CENTER" minHeight="50.0" prefHeight="50.0">
+         <children>
+            <Label text="V:" />
+         
+                <TextField fx:id="txtFieldV" prefWidth="500.0" promptText="Símbolos Não Terminais">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="50.0">
+         <children>
+            <Label text="T:" />
+             <TextField fx:id="txtFieldT" prefWidth="500.0" promptText="Símbolos Terminais">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="260.0" prefHeight="50.0">
+         <children>
+            <Label text="P:" />
+             <TextField fx:id="txtFieldP" prefWidth="500.0" promptText="Regras de Produção">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="360.0" prefHeight="50.0">
+         <children>
+            <Label text="S:" />
+             <TextField fx:id="txtFieldS" prefWidth="500.0" promptText="Símbolo Inicial">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0">
+         <children>
+            <Label text="D:" />
+            <TextField fx:id="txtFieldD" prefWidth="500.0" promptText="Derivação desejada">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <VBox alignment="CENTER">
+         <children>
+             <Button onAction="#definirGramatica" text="Definir Gramática" />
+            <HBox alignment="CENTER" prefHeight="50.0" spacing="15.0">
+               <children>
+                  <Button fx:id="bttVerificaGramatica" mnemonicParsing="false" onAction="#verificaGramatica" text="Verificar" />
+                   <Button fx:id="bttPassoPasso" onAction="#executarPassoAPasso" text="Passo a Passo" />
+                      <Button onAction="#valorPadraoTxtFields" text="Setar Teste" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>
