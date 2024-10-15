@@ -10,6 +10,7 @@ import unoeste.fipp.gabryelborges.projsimuladorlfajavafx.entidades.Gramatica;
 import unoeste.fipp.gabryelborges.projsimuladorlfajavafx.entidades.Util;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,6 +23,8 @@ public class GramRegViewController implements Initializable {
     public Button bttVerificaGramatica;
     public Button bttPassoPasso;
     private Gramatica gramatica;
+
+    private List<String> passos = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,11 +85,28 @@ public class GramRegViewController implements Initializable {
     }
 
     @FXML
+    private void valorPadraoTxtFields2() {
+        txtFieldV.setText("A,B,C");//variaveis
+        txtFieldT.setText("a,b,c");//simbolos terminais
+        txtFieldP.setText("A->Ba,A->Ca,B->Cb,B->b,B->Ab,C->Ac,C->c");//regras de producao
+        txtFieldS.setText("A");//simbolo inicial
+        txtFieldD.setText("abc");//cadeia
+        //txtFieldP.setText("A->aB,A->aC,B->bC,C->cA");
+    }
+
+    @FXML
     private void executarPassoAPasso() {
         // Implementar lógica de execução passo a passo
+        verificaGramatica(null);
+        String exibirPassos = "";
+        for (String passo : passos) {
+            exibirPassos += passo + "\n";
+        }
+        Util.exibirMensagem("Passos", exibirPassos, "Passos", Alert.AlertType.INFORMATION);
     }
 
     public void verificaGramatica(ActionEvent actionEvent) {
+        passos.clear();
         if (gramatica != null) {
             if (gramatica.getV().contains(gramatica.getS())) {
                 String D = txtFieldD.getText();
@@ -102,12 +122,13 @@ public class GramRegViewController implements Initializable {
                                     String proxSimbolo = (i + 1 < D.length()) ? String.valueOf(D.charAt(i + 1)) : "";
                                     String proxVar = derivacao.replaceAll("[^A-Z]", "");
 
-                                    // Check if the derivation can generate a terminal symbol directly
-                                    if (proxSimbolo.isEmpty() && derivacao.equals(simbolo)) {
+                                    if (proxSimbolo.isEmpty() && derivacao.equals(simbolo)) {//caso de gerar ultimo terminal
                                         atual = "";
+                                        passos.add(producao);
                                         encontrou = true;
                                     } else if (gramatica.podeGerar(proxVar, proxSimbolo)) {
                                         atual = proxVar;
+                                        passos.add(producao);
                                         encontrou = true;
                                     }
                                 }
@@ -141,39 +162,50 @@ public class GramRegViewController implements Initializable {
     /*
 
     public void verificaGramatica(ActionEvent actionEvent) {
-        String aux;
-        if(gramatica != null) {
-            if(gramatica.getV().contains(gramatica.getS())) {
+        if (gramatica != null) {
+            if (gramatica.getV().contains(gramatica.getS())) {
                 String D = txtFieldD.getText();
                 String atual = gramatica.getS();
                 for (int i = 0; i < D.length(); i++) {
                     String simbolo = String.valueOf(D.charAt(i));
-                    if(gramatica.getT().contains(simbolo)) {
+                    if (gramatica.getT().contains(simbolo)) {
                         boolean encontrou = false;
                         for (String producao : gramatica.getP()) {
-                            if(!encontrou) {
+                            if (!encontrou) {
                                 if (producao.startsWith(atual + "->") && producao.contains(simbolo)) {
+                                    String derivacao = producao.substring(producao.indexOf(">") + 1);
+                                    String proxSimbolo = (i + 1 < D.length()) ? String.valueOf(D.charAt(i + 1)) : "";
+                                    String proxVar = derivacao.replaceAll("[^A-Z]", "");
 
-                                    //pegar somente letras maiusculas(variaveis)
-                                    atual = producao.substring(producao.indexOf(">") + 1).replaceAll("[^A-Z]", "");
-                                    encontrou = true;
+                                    if (proxSimbolo.isEmpty() && derivacao.equals(simbolo)) {//caso de gerar ultimo terminal
+                                        atual = "";
+                                        encontrou = true;
+                                    } else if (gramatica.podeGerar(proxVar, proxSimbolo)) {
+                                        atual = proxVar;
+                                        encontrou = true;
+                                    }
                                 }
                             }
                         }
-                        if(!encontrou) {
+                        if (!encontrou) {
                             Util.exibirMensagem("Gramática inválida", null, "Gramática inválida", Alert.AlertType.ERROR);
                             return;
                         }
-                    }else{
+                    } else {
                         Util.exibirMensagem("Gramática inválida", null, "Gramática inválida", Alert.AlertType.ERROR);
                         return;
                     }
                 }
-                Util.exibirMensagem("Gramática válida", null, "Gramática válida", Alert.AlertType.INFORMATION);
-            }else{
+                // Verificação adicional para garantir que todas as variáveis foram consumidas
+                if (atual.chars().anyMatch(Character::isUpperCase)) {
+                    Util.exibirMensagem("Gramática inválida: Variáveis não totalmente consumidas", null, "Gramática inválida", Alert.AlertType.ERROR);
+                } else {
+                    Util.exibirMensagem("Gramática válida", null, "Gramática válida", Alert.AlertType.INFORMATION);
+                }
+            } else {
                 Util.exibirMensagem("Gramática inválida", null, "Gramática inválida", Alert.AlertType.ERROR);
             }
-        }else{
+        } else {
             Util.exibirMensagem("Defina a gramática", null, "Defina a gramática", Alert.AlertType.ERROR);
         }
     }
